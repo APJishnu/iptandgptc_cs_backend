@@ -23,7 +23,7 @@ app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 // CORS Configuration (Allow localhost:3000 and credentials)
 app.use(
     cors({
-      origin: "http://localhost:3000", // Allow frontend URL
+      origin: `${process.env.FRONTEND_URI}` , // Allow frontend URL
       credentials: true, // Allow cookies, sessions, etc.
       methods: ["GET", "POST", "PUT", "DELETE"], // Allowed request methods
     })
