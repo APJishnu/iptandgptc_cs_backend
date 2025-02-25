@@ -29,7 +29,7 @@ app.use(
     cors({
       origin: `${process.env.FRONTEND_URI}` , // Allow frontend URL
       credentials: true, // Allow cookies, sessions, etc.
-      methods: ["GET", "POST", "PUT", "DELETE"], // Allowed request methods
+      methods: ["GET", "POST", "PUT", "DELETE" ,"OPTIONS"], // Allowed request methods
       allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     })
   );
