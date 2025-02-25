@@ -24,7 +24,7 @@ const authenticateAdmin = (req, res, next) => {
 
     // Verify JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== "admin" && decoded.role !== "superadmin") {
+    if (decoded.role !== "admin" || decoded.role !== "superadmin") {
       return res.status(403).json({
         status: false,
         message: "Access denied. Not authorized.",
