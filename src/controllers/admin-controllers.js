@@ -57,7 +57,7 @@ export default class AdminController {
           });
       } else {
         return res
-          .status(500)
+          .status(404)
           .json({ status: false, message: "Failed to add notes", data: [] });
       }
     } catch (error) {
@@ -107,6 +107,23 @@ export default class AdminController {
       res.status(200).json({ status: true,message:"Note fetched successfully", data: result });
     } catch (error) {
       console.error("Error in fetchAllNotes:", error);
+      res.status(500).json({ status: false, message: "Internal server error", error: error.message });
+    }
+  }
+
+  async deleteNote(req, res) {
+    try {
+
+      const noteId = req.body.id
+      const result = await adminRepository.deleteNote(noteId);
+
+      if (!result) {
+        return res.status(404).json({ status: false, message: "Error deleting note." });
+      }
+
+      res.status(200).json({ status: true,message:"Note deleted successfully"});
+    } catch (error) {
+      console.error("Error in deleteNote:", error);
       res.status(500).json({ status: false, message: "Internal server error", error: error.message });
     }
   }

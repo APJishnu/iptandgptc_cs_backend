@@ -6,6 +6,8 @@ import seedSubjects from './src/seeder/subject-seeder.js';
 import seedModules from './src/seeder/module-seeder.js';
 import cors from "cors"
 import fileUpload from "express-fileupload";
+import seedSuperAdmin from './src/seeder/super-admin-seeder.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -18,6 +20,7 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
+app.use(cookieParser());
 
 
 // CORS Configuration (Allow localhost:3000 and credentials)
@@ -37,6 +40,7 @@ app.listen(port, async() => {
         await connectDatabase();
         // await seedSubjects();
         // await seedModules();
+        // await seedSuperAdmin();
     }catch(error){
         console.error(error,"Error or server initialization.")
     }

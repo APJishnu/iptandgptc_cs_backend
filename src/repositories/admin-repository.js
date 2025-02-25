@@ -1,17 +1,19 @@
+import Events from "../models/event-schema.js";
 import Notes from "../models/notes.js";
 import Subject from "../models/subjects.js";
+import superAdmin from "../models/super-admin.js";
 
-export default class AdminRepository{
+export default class AdminRepository {
   async addNotes(module, description, fileUrl = null, linkUrl = null) {
     try {
       const existingNotes = await Notes.findOne({ module });
-  
+
       const newNote = {
         description,
         file_url: fileUrl,
         link_url: linkUrl,
       };
-  
+
       if (existingNotes) {
         // If module exists, push new note to the notes array
         existingNotes.notes.push(newNote);
@@ -28,7 +30,6 @@ export default class AdminRepository{
       throw new Error(error);
     }
   }
-  
 
   async getSubjectsWithModules(semester) {
     try {
@@ -50,22 +51,21 @@ export default class AdminRepository{
 
   async getAllNotes() {
     try {
-      const notes = await Notes.find()
-        .populate({
-          path: "module",
-          select: "module_name subject",
-          populate: {
-            path: "subject",
-            select: "name semester",
-          },
-        });
+      const notes = await Notes.find().populate({
+        path: "module",
+        select: "module_name subject",
+        populate: {
+          path: "subject",
+          select: "name semester",
+        },
+      });
 
       if (!notes || notes.length === 0) return [];
 
       // Flatten the notes structure
       return notes.flatMap((note) =>
         note.notes.map((n) => ({
-          id:n._id,
+          id: n._id,
           semester: note.module.subject.semester,
           subject: note.module.subject.name,
           module: note.module.module_name,
@@ -79,5 +79,47 @@ export default class AdminRepository{
     }
   }
 
+  async deleteNote(noteId) {
+    try {
+      const result = await Notes.findOneAndUpdate(
+        { "notes._id": noteId }, // Find the note inside the array
+        { $pull: { notes: { _id: noteId } } }, // Remove it from the array
+        { new: true } // Return the updated document
+      );
+
+      return result;
+    } catch (error) {
+      console.error("Error deleting note:", error);
+      return null;
+    }
+  }
+
+  /**
+   * Find admin by email.
+   * @param {string} email - Admin email
+   * @returns {Promise<Object|null>} - Admin object or null
+   */
+  async findAdminByEmail(email) {
+    return await superAdmin.findOne({ email });
+  }
+
+  /**
+   * Create a new admin.
+   * @param {Object} adminData - Admin details (email, password, role)
+   * @returns {Promise<Object>} - Created admin
+   */
+  async createAdmin(adminData) {
+    return await superAdmin.create(adminData);
+  }
+
+
+  /**
+   * Create a new event in the database
+   * @param {Object} eventData - Event details
+   * @returns {Promise<Object>} - Created event
+   */
+  async createEvent(eventData) {
+    return await Events.create(eventData);
+  }
 
 }
