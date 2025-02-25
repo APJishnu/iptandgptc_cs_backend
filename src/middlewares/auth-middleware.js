@@ -11,13 +11,12 @@ dotenv.config();
  * @param {Function} next - Next middleware function
  */
 const authenticateAdmin = (req, res, next) => {
-  console.log(req.cookies, "cookies");
+  console.log(req, "cookies");
   try {
     const token = req.cookies.admin_token; // Retrieve token from cookies
 
     if (!token) {
       return res.status(403).json({
-        data: req,
         status: false,
         message: "Access denied. No token provided.",
         errors: [{ field: "auth", message: "Admin authentication required" }],
