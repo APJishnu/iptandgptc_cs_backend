@@ -20,7 +20,7 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-app.use(cookieParser());
+
 
 
 
@@ -33,6 +33,17 @@ app.use(
       allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     })
   );
+
+  
+// Use cookie-parser middleware
+app.use(cookieParser());
+
+
+/**
+ * Use Morgan for HTTP request and response logging
+ * In a production environment, "combined" or "common" might be more suitable for comprehensive logging while serving requests.
+ **/
+app.use(morgan(process.env.LOGGING_FORMAT || "dev"));
 
 configureRoutes(app);
 

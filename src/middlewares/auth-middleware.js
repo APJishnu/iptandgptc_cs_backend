@@ -11,7 +11,7 @@ dotenv.config();
  * @param {Function} next - Next middleware function
  */
 const authenticateAdmin = (req, res, next) => {
-  console.log(req, "cookies");
+  console.log(req.cookies, "cookies");
   try {
     const token = req.cookies.admin_token; // Retrieve token from cookies
 
