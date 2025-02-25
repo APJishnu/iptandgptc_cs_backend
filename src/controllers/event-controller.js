@@ -66,8 +66,6 @@ export default class EventController {
     try {
       const events = await eventRepository.findAllEvents();
 
-      console.log(events);
-
       if (events.length > 0) {
         return res.status(200).json({
           status: true,
