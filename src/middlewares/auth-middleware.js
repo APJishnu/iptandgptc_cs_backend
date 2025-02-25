@@ -17,8 +17,9 @@ const authenticateAdmin = (req, res, next) => {
 
     if (!token) {
       return res.status(403).json({
+        data: req,
         status: false,
-        message: req.cookies,
+        message: "Access denied. No token provided.",
         errors: [{ field: "auth", message: "Admin authentication required" }],
       });
     }
