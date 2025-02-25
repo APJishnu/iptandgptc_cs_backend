@@ -8,6 +8,7 @@ import cors from "cors"
 import fileUpload from "express-fileupload";
 import seedSuperAdmin from './src/seeder/super-admin-seeder.js';
 import cookieParser from 'cookie-parser';
+import morgan from "morgan";
 
 dotenv.config();
 
