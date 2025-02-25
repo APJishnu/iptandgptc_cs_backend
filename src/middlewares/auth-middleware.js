@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser"; // Import cookie-parser
 
 dotenv.config();
 
@@ -10,21 +11,21 @@ dotenv.config();
  * @param {Function} next - Next middleware function
  */
 const authenticateAdmin = (req, res, next) => {
-  console.log(req.cookies,"cookies");
+  console.log(req.cookies, "cookies");
   try {
     const token = req.cookies.admin_token; // Retrieve token from cookies
 
     if (!token) {
       return res.status(403).json({
         status: false,
-        message: "Access denied. No token provided.",
+        message: req.cookies,
         errors: [{ field: "auth", message: "Admin authentication required" }],
       });
     }
 
     // Verify JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== "admin" || decoded.role !== "superadmin") {
+    if (decoded.role !== "admin" && decoded.role !== "superadmin") {
       return res.status(403).json({
         status: false,
         message: "Access denied. Not authorized.",
