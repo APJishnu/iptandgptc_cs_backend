@@ -100,7 +100,8 @@ export default class AdminRepository {
    * @returns {Promise<Object|null>} - Admin object or null
    */
   async findAdminByEmail(email) {
-    return await superAdmin.findOne({ email });
+    const admin = await superAdmin.findOne({email});
+    return admin;
   }
 
   /**

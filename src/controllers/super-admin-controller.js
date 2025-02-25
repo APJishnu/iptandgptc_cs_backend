@@ -13,8 +13,9 @@ export default class SuperAdminController {
    * @returns {Object} - Response with status, message, token, and errors if applicable
    */
   async login(req, res) {
+    console.log(req.body)
     try {
-     
+      
       const { email, password } = req.body.values;
       const errors = [];
 
