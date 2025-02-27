@@ -12,6 +12,8 @@ dotenv.config();
  */
 const authenticateAdmin = (req, res, next) => {
   console.log(req.cookies, "cookies");
+  console.log(req.headers.cookie);  // Check if cookie is sent
+
   try {
     const token = req.cookies.admin_token; // Retrieve token from cookies
 
