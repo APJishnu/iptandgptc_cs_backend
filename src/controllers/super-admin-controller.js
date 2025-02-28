@@ -49,6 +49,13 @@ export default class SuperAdminController {
       // Generate JWT token
       const token = generateToken({ id: admin._id, role: admin.role });
 
+      res.cookie('admin_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // true in production
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      });
+
       return res.status(200).json({ status: true, message: "Login successful", token });
     } catch (error) {
       console.error("Error in AdminController login:", error);

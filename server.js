@@ -26,16 +26,14 @@ app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 
 
 // CORS Configuration (Allow localhost:3000 and credentials)
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URI, // Ensure this is correctly set
-    credentials: true, // Allow credentials (cookies, sessions)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  })
-);
+// Configure CORS - this must come BEFORE other middleware
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // Your Vercel frontend URL
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
 
-  
 // Use cookie-parser middleware
 app.use(cookieParser());
 
