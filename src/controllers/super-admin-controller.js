@@ -49,12 +49,12 @@ export default class SuperAdminController {
       // Generate JWT token
       const token = generateToken({ id: admin._id, role: admin.role });
 
-      res.cookie("admin_token", token, {
-        httpOnly: true,
-        secure: true, // Ensure it's sent only over HTTPS
-        sameSite: "None", // Required for cross-site cookies
-        maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
-      });
+      // res.cookie("admin_token", token, {
+      //   httpOnly: true,
+      //   secure: true, // Ensure it's sent only over HTTPS
+      //   sameSite: "None", // Required for cross-site cookies
+      //   maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
+      // });
       
       return res.status(200).json({ status: true, message: "Login successful", token });
     } catch (error) {
