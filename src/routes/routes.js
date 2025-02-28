@@ -6,7 +6,7 @@ import userRouter from "./user.js";
 const configureRoutes = (app) => {
     app.use('/api/auth',authRouter);
     app.use('/api/user',userRouter);
-    app.use('/api/admin',authenticateAdmin, adminRouter);
+    app.use('/api/admin',adminRouter);
 }
 
 
