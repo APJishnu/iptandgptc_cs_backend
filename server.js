@@ -31,7 +31,12 @@ app.use(
       origin: process.env.FRONTEND_URI , // Allow frontend URL
       credentials: true, // Allow cookies, sessions, etc.
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS","HEAD"],// Allowed request methods
-      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Access-Control-Allow-Credentials",
+      ],
     })
   );
 
